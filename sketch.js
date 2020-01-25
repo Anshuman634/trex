@@ -7,7 +7,7 @@ var CloudsGroup
 var gameState
 var gameOver,gameover
 var reset,restart
-var sounddie
+var sounddie,soundjump,soundcheckpoint
 function preload(){
   trex_running =      loadAnimation("trex1.png","trex3.png","trex4.png");
   trex_collided = loadImage("trex_collided.png");
@@ -21,8 +21,10 @@ function preload(){
   obstacle5=loadImage("obstacle5.png");
   obstacle6=loadImage("obstacle6.png");
   
-  sounddie=loadsound=()
-  
+  sounddie=loadSound("die.mp3");
+  soundjump=loadSound("jump.mp3");
+  soundcheckpoint=loadSound("checkpoint.mp3");
+ 
   cloud=loadImage("cloud.png");
   gameover=loadImage("gameOver.png");
   
@@ -68,7 +70,8 @@ function draw() {
   if(gameState==="play"){
   if(keyDown("space")&&trex.y>150) {
     trex.velocityY = -10;
-  }
+    soundjump.play();
+    }
   
   trex.velocityY = trex.velocityY + 0.8
   
@@ -86,7 +89,7 @@ function draw() {
   
   drawSprites();
   if(obstacleGroup.isTouching(trex)){
-  
+      sounddie.play();
       gameState="end";
   }
   
